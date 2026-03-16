@@ -41,7 +41,7 @@ def listar_todos():
                 
                 for item in resultados:
                     produto = Produto(*item)
-                    print(f"{produto.id_bebida:<5} | {produto.nome:<20} | {produto.marca:<15} | {produto.estoque:<5} | R$ {produto.preco:<8.2f} | {produto.validade}")        
+                    print(f"{produto.id_bebida:<5} | {produto.marca:<15} | {produto.nome:<20}| {produto.estoque:<5} | R$ {produto.preco:<8.2f} | {produto.validade}")        
        
         except Exception as e:
             print(f"Erro ao ler dados: {e}")
@@ -96,6 +96,9 @@ def remover_produto():
     
     conexao, cursor = db.conectar()
     if conexao:
+        sql = "DELETE FROM vendas WHERE id_produto = %s"
+        cursor.execute(sql, (id_prod,))
+        conexao.commit()
         sql = "DELETE FROM produtos WHERE id_bebida = %s"
         cursor.execute(sql, (id_prod,))
         conexao.commit()
